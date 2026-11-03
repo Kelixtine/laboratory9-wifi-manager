@@ -1,141 +1,124 @@
 # BCA188 – ESP32 Personal Wi-Fi Manager
 
-## 1. Project Overview
+## Project Overview
 
-The ESP32 Personal Wi-Fi Manager is a project that allows users to configure an ESP32's wireless network connection through a web-based configuration portal.
+The **ESP32 Personal Wi-Fi Manager** is an IoT project that allows users to configure the ESP32's Wi-Fi connection through a web-based configuration portal. Instead of manually changing Wi-Fi credentials in the source code, users can connect to the ESP32's access point and select their preferred Wi-Fi network using a smartphone or computer.
 
-Using the WiFiManager library, users can connect to the ESP32's access point, open a browser, select an available Wi-Fi network, and enter its password without manually editing the source code.
+This project uses the **WiFiManager** library to simplify Wi-Fi configuration and connection management.
 
-## 2. Features
+## Features
 
-- Creates a temporary Wi-Fi access point for configuration.
-- Provides a browser-based Wi-Fi configuration portal.
-- Scans and displays available wireless networks.
-- Allows users to select a network and enter credentials.
-- Connects the ESP32 to the selected Wi-Fi network.
-- Displays connection information through the Serial Monitor.
+- Automatically connects to previously saved Wi-Fi credentials.
+- Creates a Wi-Fi Access Point when configuration is needed.
+- Provides a web-based configuration portal.
+- Allows users to select and save Wi-Fi credentials without modifying the code.
+- Displays connection status and the ESP32's assigned IP address through the Serial Monitor.
 
-## 3. Hardware and Software Requirements
+## Hardware Requirements
 
-**Hardware**
 - ESP32 Development Board
 - USB cable
 - Computer
+- Smartphone or another Wi-Fi-enabled device for configuration
 
-**Software**
+## Software Requirements
+
 - Visual Studio Code
-- PlatformIO IDE
+- PlatformIO IDE extension
 - Arduino Framework
 - WiFiManager Library
+- ESP32 Platform for PlatformIO
 
-## 4. Configuration Details
+## Project Configuration
 
 | Configuration | Value |
 |---|---|
+| Board | ESP32 Dev Module |
+| Platform | Espressif32 |
+| Framework | Arduino |
+| Environment | `esp32dev` |
+| WiFiManager Version | 2.0.17 |
+| Serial Baud Rate | 115200 |
 | Access Point SSID | `BCA188-ESP32-2024-1116` |
-| Configuration Portal | `192.168.4.1` |
-| Serial Baud Rate | `115200` |
-| PlatformIO Environment | `esp32dev` |
-| WiFiManager Version | `2.0.17` |
+| Configuration Portal IP | `192.168.4.1` |
 
-## 5. Project Structure
+## Project Structure
 
 ```text
 BCA188-ESP32-WiFi-Manager/
+│
 ├── include/
 ├── lib/
 ├── src/
 │   └── main.cpp
+│
 ├── test/
+├── docs/
+│   └── images/
+│       ├── serial-monitor.png
+│       ├── wifi-network-scan.jpg
+│       └── wifimanager-portal.jpg
+│
 ├── .gitignore
 ├── platformio.ini
 └── README.md
 ```
 
-## 6. How the System Works
+## How the Project Works
 
-1. The ESP32 initializes its Wi-Fi and Serial Monitor.
-2. WiFiManager checks for previously saved Wi-Fi credentials.
-3. If the ESP32 cannot connect using saved credentials, it starts its configuration access point.
-4. The user connects to `BCA188-ESP32-2024-1116`.
-5. The user opens `http://192.168.4.1`.
-6. The configuration portal displays available wireless networks.
-7. The user selects a network and enters its password.
-8. The ESP32 attempts to connect to the selected network.
-9. Once connected, the ESP32 displays its network name and assigned IP address in the Serial Monitor.
+1. The ESP32 starts and initializes the Wi-Fi connection.
+2. WiFiManager checks whether previously saved Wi-Fi credentials are available.
+3. If valid credentials are saved, the ESP32 attempts to connect automatically.
+4. If configuration is required, the ESP32 creates a Wi-Fi Access Point named `BCA188-ESP32-2024-1116`.
+5. The user connects to the ESP32 Access Point using a smartphone or computer.
+6. The user opens the configuration portal at `192.168.4.1`.
+7. The user selects an available Wi-Fi network and enters its password.
+8. WiFiManager saves the credentials and attempts to connect.
+9. Once connected, the ESP32 displays the connected network and its assigned IP address in the Serial Monitor.
 
-## 7. Installation and Testing
+## Installation and Testing
 
-**Step 1 – Open the project**
+1. Clone or download this repository.
+2. Open the project folder in Visual Studio Code.
+3. Make sure the PlatformIO extension is installed.
+4. Connect the ESP32 board to the computer.
+5. Open the PlatformIO terminal.
+6. Build and upload the program to the ESP32.
+7. Open the Serial Monitor and set the baud rate to `115200`.
+8. If Wi-Fi configuration is needed, connect to the ESP32 Access Point.
+9. Open `192.168.4.1` in a browser.
+10. Select a Wi-Fi network and enter its password.
+11. Check the Serial Monitor for the connection status and assigned IP address.
 
-Open the project folder in Visual Studio Code.
+## Screenshots
 
-**Step 2 – Connect the ESP32**
+### 1. ESP32 Serial Monitor
 
-Connect the ESP32 development board to the computer using a USB cable.
-
-**Step 3 – Upload the firmware**
-
-Run the following command in the PlatformIO terminal:
-
-```powershell
-pio run -t upload --upload-port COM3
-```
-
-**Step 4 – Open the Serial Monitor**
-
-```powershell
-pio device monitor -p COM3 -b 115200
-```
-
-**Step 5 – Connect to the ESP32 access point**
-
-Open the available Wi-Fi networks on a phone or computer and connect to:
-
-`BCA188-ESP32-2024-1116`
-
-**Step 6 – Open the configuration portal**
-
-Visit:
-
-`http://192.168.4.1`
-
-**Step 7 – Configure the connection**
-
-Select an available wireless network, enter its password, and press Save.
-
-**Step 8 – Verify the connection**
-
-Check the Serial Monitor for the successful connection message and assigned IP address.
-
-## 8. Screenshots and Demonstration
-
-### 8.1 Serial Monitor Output
-
-Shows the ESP32 startup process, Wi-Fi Manager activity, and connection information.
+Shows the ESP32 startup process, WiFiManager messages, and Wi-Fi connection status.
 
 ![ESP32 Serial Monitor](docs/images/serial-monitor.png)
 
-### 8.2 Wi-Fi Configuration Network
+### 2. Available Wi-Fi Networks
 
-Shows the ESP32 configuration access point and the Wi-Fi configuration interface.
+Shows the Wi-Fi configuration process and available wireless networks.
 
-![Wi-Fi Configuration](docs/images/wifi-network-scan.png)
+![Wi-Fi Configuration](docs/images/wifi-network-scan.jpg)
 
-### 8.3 WiFiManager Portal
+### 3. WiFiManager Configuration Portal
 
-Shows the WiFiManager homepage, including the Configure WiFi, Info, and Exit options.
+Shows the web-based configuration portal used to select and configure a Wi-Fi network.
 
-![WiFiManager Portal](docs/images/wifimanager-portal.png)
+![WiFiManager Portal](docs/images/wifimanager-portal.jpg)
 
-## 9. Results and Conclusion
+## Results and Conclusion
 
-The ESP32 Personal Wi-Fi Manager successfully demonstrates wireless network configuration through a browser-based portal.
+The ESP32 Personal Wi-Fi Manager successfully demonstrates a convenient way to configure wireless connectivity using the WiFiManager library.
 
-The project allows users to configure Wi-Fi credentials without modifying the program source code. It provides a convenient and user-friendly method of connecting an ESP32 development board to a wireless network.
+The project allows users to configure Wi-Fi credentials through a web portal instead of modifying the program manually. It also demonstrates how an ESP32 can operate as a Wi-Fi Access Point during configuration and connect to an existing wireless network after valid credentials are provided.
 
-## 10. Source Code Repository
+This activity provides practical experience with ESP32 programming, wireless networking, IoT device configuration, and the use of external Arduino libraries.
 
-GitHub Repository:
+## Repository
 
+GitHub Repository:  
 https://github.com/Kelixtine/laboratory9-wifi-manager
